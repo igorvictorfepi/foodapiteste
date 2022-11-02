@@ -11,46 +11,35 @@ database = databases.Database(DATABASE_URL)
 
 metadata = sqlalchemy.MetaData()
 
-notes = sqlalchemy.Table(
-    "notes",
-    metadata,
-    sqlalchemy.Column("name", sqlalchemy.String, primary_key=True),
-    sqlalchemy.Column("img", sqlalchemy.String),
-    sqlalchemy.Column("level", sqlalchemy.String)
-)
-
 engine = sqlalchemy.create_engine(
     DATABASE_URL
 )
 
 metadata.create_all(engine)
 
-class Note(BaseModel):
-    name: str
-    img: str
-    level: str
-
-
 app = FastAPI()
 
+menu = sqlalchemy.Table(
+    "menu",
+    metadata,
+    sqlalchemy.Column("nome", sqlalchemy.String, primary_key=True),
+    sqlalchemy.Column("img", sqlalchemy.String),
+)
+
+class Menu(BaseModel):
+    nome: str
+    img: str
 
 @app.on_event("startup")
 async def startup():
     await database.connect()
 
-
 @app.on_event("shutdown")
 async def shutdown():
     await database.disconnect()
   
-
-@app.get("/notes/", response_model=List[Note])   
-async def read_notes():
-    query = notes.select()
+@app.get("/menu/", response_model=List[Menu])   
+async def read_restaurantes():
+    query = menu.select()
     return await database.fetch_all(query) 
-
-@app.post("/notes/", response_model=List[Note])   
-async def create_notes(note: Note):
-    query = notes.insert().values(name=note.name, img=note.img, level=note.level)
-    last_record_name = await database.execute(query)
-    return {**note.dict(), "name": last_record_name}
+    
