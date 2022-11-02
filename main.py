@@ -5,7 +5,7 @@ import databases
 import sqlalchemy
 from pydantic import BaseModel
  
-DATABASE_URL = "postgres://jvqdzdgtbewwtv:274563f8fc0024dae7fc84b27c00cc7a593f9506775a146f2b1934bd1d5108d7@ec2-54-163-34-107.compute-1.amazonaws.com:5432/d4eq052nm6qqfd"
+DATABASE_URL = "postgresql://jvqdzdgtbewwtv:274563f8fc0024dae7fc84b27c00cc7a593f9506775a146f2b1934bd1d5108d7@ec2-54-163-34-107.compute-1.amazonaws.com:5432/d4eq052nm6qqfd"
 
 database = databases.Database(DATABASE_URL)
 
