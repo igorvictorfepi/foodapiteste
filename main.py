@@ -50,5 +50,5 @@ async def read_restaurantes():
 @app.post("/menu/", response_model=Menu)   
 async def create_restaurantes(menu: Menu):
     query = menus.insert().values(nome=menu.name, img=menu.img)
-    last_record_name = await database.execute(query)
-    return {**menu.dict(), "nome": last_record_name}
+    last_record_id = await database.execute(query)
+    return {**menu.dict(), "id": last_record_id}
