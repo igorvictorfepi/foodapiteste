@@ -114,6 +114,6 @@ async def read_item_by_id(subid:int):
 
 @app.post("/item/", response_model=Item)   
 async def create_item(item: ItemIn):
-    query = itens.insert().values(title=item.title, image=item.image, price=item.price, description=item.description)
+    query = itens.insert().values(title=item.title, image=item.image, price=item.price, description=item.description, subid=item.subId)
     last_record_id2 = await database.execute(query)
     return {**item.dict(), "id": last_record_id2}
