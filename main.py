@@ -17,6 +17,9 @@ menus = sqlalchemy.Table(
     sqlalchemy.Column("id", sqlalchemy.Integer, primary_key=True),
     sqlalchemy.Column("nome", sqlalchemy.String),
     sqlalchemy.Column("img", sqlalchemy.String),
+    sqlalchemy.Column("preco", sqlalchemy.Integer),
+    sqlalchemy.Column("revisao", sqlalchemy.Integer),
+    sqlalchemy.Column("avaliacao", sqlalchemy.Integer),
 )
 
 engine = sqlalchemy.create_engine(
