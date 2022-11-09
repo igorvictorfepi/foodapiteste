@@ -21,14 +21,13 @@ menus = sqlalchemy.Table(
     sqlalchemy.Column("revisao", sqlalchemy.Integer),
     sqlalchemy.Column("avaliacao", sqlalchemy.Integer),
     sqlalchemy.Column("categoria", sqlalchemy.String),
-    sqlalchemy.Column("subname", sqlalchemy.String),
 )
 
 itens = sqlalchemy.Table(
     "itens",
     metadata,
     sqlalchemy.Column("id", sqlalchemy.Integer, primary_key=True),
-    sqlalchemy.Column("subid", sqlalchemy.Integer,),
+    sqlalchemy.Column("subid", sqlalchemy.Integer),
     sqlalchemy.Column("title", sqlalchemy.String),
     sqlalchemy.Column("description", sqlalchemy.String),
     sqlalchemy.Column("price", sqlalchemy.String),
@@ -62,14 +61,14 @@ class MenuIn(BaseModel):
 
 class Item(BaseModel):
     id: int
-    subId: int
+    subid: int
     title: str
     description: str
     price: str
     image: str
 
 class ItemIn(BaseModel):
-    subId: int
+    subid: int
     title: str
     description: str
     price: str
@@ -111,7 +110,7 @@ async def read_item():
 async def read_item_by_id(subid:int):
     query = itens.select().where(itens.c.subid == subid)
     return await database.fetch_all(query)
-
+    
 @app.post("/item/", response_model=Item)   
 async def create_item(item: ItemIn):
     query = itens.insert().values(title=item.title, image=item.image, price=item.price, description=item.description, subid=item.subid)
