@@ -28,7 +28,7 @@ itens = sqlalchemy.Table(
     "itens",
     metadata,
     sqlalchemy.Column("id", sqlalchemy.Integer, primary_key=True),
-    sqlalchemy.Column("subId", sqlalchemy.Integer,),
+    sqlalchemy.Column("subid", sqlalchemy.Integer,),
     sqlalchemy.Column("title", sqlalchemy.String),
     sqlalchemy.Column("description", sqlalchemy.String),
     sqlalchemy.Column("price", sqlalchemy.String),
@@ -114,6 +114,6 @@ async def read_item_by_id(subid:int):
 
 @app.post("/item/", response_model=Item)   
 async def create_item(item: ItemIn):
-    query = itens.insert().values(title=item.title, image=item.image, price=item.price, description=item.description, subid=item.subId)
+    query = itens.insert().values(title=item.title, image=item.image, price=item.price, description=item.description, subid=item.subid)
     last_record_id2 = await database.execute(query)
     return {**item.dict(), "id": last_record_id2}
