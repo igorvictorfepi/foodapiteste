@@ -21,6 +21,7 @@ menus = sqlalchemy.Table(
     sqlalchemy.Column("revisao", sqlalchemy.Integer),
     sqlalchemy.Column("avaliacao", sqlalchemy.Integer),
     sqlalchemy.Column("categoria", sqlalchemy.String),
+    sqlalchemy.Column("subname", sqlalchemy.String),
 )
 
 itens = sqlalchemy.Table(
@@ -47,6 +48,7 @@ class Menu(BaseModel):
     revisao: int
     avaliacao: int
     categoria: str
+    subname: str
 
 class MenuIn(BaseModel):
     nome: str
@@ -55,6 +57,7 @@ class MenuIn(BaseModel):
     revisao: int
     avaliacao: int
     categoria: str
+    subname: str
 
 class Item(BaseModel):
     id: int
@@ -105,3 +108,30 @@ async def create_item(item: ItemIn):
     query = itens.insert().values(title=item.title, image=item.image, price=item.price, description=item.description)
     last_record_id2 = await database.execute(query)
     return {**item.dict(), "id": last_record_id2}
+
+
+# RESTAURANTES
+
+## 1
+@app.get("/bar1/", response_model=List[Menu])   
+async def read_restaurant():
+    query = menus.select()
+    return await database.fetch_all(query)
+
+@app.post("/bar1/", response_model=Menu)   
+async def create_restaurantes(menu: MenuIn):
+    query = menus.insert().values(nome=menu.nome, img=menu.img, preco=menu.preco, revisao=menu.revisao, avaliacao=menu.avaliacao, categoria=menu.categoria, subnome=menu.subnome)
+    last_record_id = await database.execute(query)
+    return {**menu.dict(), "id": last_record_id}
+
+## 2
+@app.get("/bar2/", response_model=List[Menu])   
+async def read_restaurant():
+    query = menus.select()
+    return await database.fetch_all(query)
+
+@app.post("/bar2/", response_model=Menu)   
+async def create_restaurantes(menu: MenuIn):
+    query = menus.insert().values(nome=menu.nome, img=menu.img, preco=menu.preco, revisao=menu.revisao, avaliacao=menu.avaliacao, categoria=menu.categoria, subnome=menu.subnome)
+    last_record_id = await database.execute(query)
+    return {**menu.dict(), "id": last_record_id}
